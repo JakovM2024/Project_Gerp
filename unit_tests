@@ -5,8 +5,3 @@
 #include <iostream>
 using namespace std;
 
-int main(){
-    DirectoryProcessor pros;
-    pros.traverseDirectory("tester");
-    return 0;
-}

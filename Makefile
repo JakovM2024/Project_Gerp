@@ -3,6 +3,10 @@
 ###
 ### Author:  YOUR NAME HERE
 
+CXX = clang++
+CXXFLAGS = -g3 -Wall -Wextra
+LDFLAGS = -g3 
+
 ## 
 ## Build up your Makefile in a similar manner as for Zap. Feel free 
 ## to use that Makefile to guide you! Note, you do NOT need rules for
@@ -11,6 +15,16 @@
 ## 
 ## At the end, you can delete this comment!
 ## 
+
+run_test: processing.o main.o 
+	$(CXX) $(LDFLAGS) -o run_test main.o processing.o FSTree.o DirNode.o
+
+main.o: main.cpp
+	$(CXX) $(LDFLAGS) -c main.cpp -o main.o
+
+processing.o: processing.h processing.cpp
+	$(CXX) $(LDFLAGS) -c processing.cpp -o processing.o
+
 
 ##
 ## Here is a special rule that removes all .o files besides the provided ones 

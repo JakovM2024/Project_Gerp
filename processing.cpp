@@ -21,7 +21,7 @@ void DirectoryProcessor::traverseHelper(string path, DirNode *currFile){
     if (currFile->hasFiles()){
         int numFiles = currFile->numFiles();
         for (int i = 0; i < numFiles; i++){
-            cout << path + currFile->getFile(i);
+            cout << path + currFile->getFile(i) << endl;
         }
     }
     if (currFile->hasSubDir()){
