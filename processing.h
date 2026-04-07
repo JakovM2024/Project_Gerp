@@ -6,9 +6,17 @@
 */
 
 #include <string>
+#include "DirNode.h"
 using namespace std;
+class DirectoryProcessor{
 
-string stripNonAlphaNum(string input);
-void traverseDirectory(string directory);
+    public:
+        string stripNonAlphaNum(string input);
+        void traverseDirectory(string directory);
+
+    private:
+
+        void traverseHelper(string path, DirNode *currFile);
+};
 
 #endif 
