@@ -33,3 +33,14 @@ void DirectoryProcessor::traverseHelper(string path, DirNode *currFile){
         return;
     }
 }
+/*
+string DirectoryProcessor::stripNonAlphaNum(string input){
+    string prossecedString = "";
+    bool finished = false;
+    int start = 0;
+    int end = input.length() - 1;
+    while (not finished){
+        if ( (47 < input[start] and input[start] < 58) and )
+    }
+}
+    */
