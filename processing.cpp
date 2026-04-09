@@ -3,6 +3,7 @@
 #include "FSTree.h"
 #include "DirNode.h"
 #include <iostream>
+
 using namespace std;
 
 void DirectoryProcessor::traverseDirectory(string directory){
@@ -33,14 +34,33 @@ void DirectoryProcessor::traverseHelper(string path, DirNode *currFile){
         return;
     }
 }
-/*
-string DirectoryProcessor::stripNonAlphaNum(string input){
-    string prossecedString = "";
-    bool finished = false;
-    int start = 0;
-    int end = input.length() - 1;
-    while (not finished){
-        if ( (47 < input[start] and input[start] < 58) and )
+
+string DirectoryProcessor::stripNonAlphaNum(string input) {
+    string strippedString; 
+    int startPos = -1; 
+    int endPos = -1;
+
+    //!!!Hello!!!!
+    for (int i = 0; i < input.length(); i++) { 
+        if (isalnum(input[i]) != 0) {
+            startPos = i; 
+            break; 
+        }
     }
+
+    for (int j = input.length() - 1; j >= 0; j--) {
+        if (isalnum(input[j]) != 0) {
+            endPos = j; 
+            break;
+        }
+    }
+
+    if (startPos == -1 && endPos == -1) {
+        return ""; 
+    }
+
+    int stringLen = (endPos - startPos) + 1; 
+    strippedString = input.substr(startPos, stringLen); 
+
+    return strippedString;
 }
-    */
