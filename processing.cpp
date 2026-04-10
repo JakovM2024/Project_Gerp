@@ -28,8 +28,7 @@ void DirectoryProcessor::traverseHelper(string path, DirNode *currFile){
     if (currFile->hasSubDir()){
         int numSubDirs = currFile->numSubDirs();
         for (int i = 0; i < numSubDirs; i++){
-            currFile = currFile->getSubDir(i);
-            traverseHelper(path, currFile);
+            traverseHelper(path, currFile->getSubDir(i));
         }
         return;
     }
