@@ -25,6 +25,9 @@ main.o: main.cpp
 processing.o: processing.h processing.cpp
 	$(CXX) $(LDFLAGS) -c processing.cpp -o processing.o
 
+unit_test: unit_test_driver.o processing.o
+	${CXX} ${CXXFLAGS} unit_test_driver.o processing.o DirNode.o FSTree.o
+
 
 ##
 ## Here is a special rule that removes all .o files besides the provided ones 
