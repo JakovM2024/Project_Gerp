@@ -3,7 +3,7 @@
 #define HASH_H
 #include <string>
 
-class Maps{
+class Wrapper{
     public:
 
     //query loop

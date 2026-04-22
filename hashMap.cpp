@@ -2,14 +2,14 @@
 #include <string>
 #include <functional>
 #include <utility>
-#include "hash.h"
-#include "caseInsensitive.h"
+#include "hashMap.h"
+#include "wrapper.h"
 using namespace std;
 
 caseInsense::caseInsense(){
     array_size = 20;
     load_factor = 0;
-    arr = new list<Maps::WordInstance> [array_size];
+    arr = new list<Wrapper::WordInstance> [array_size];
 }
 
 caseInsense::~caseInsense(){
@@ -21,7 +21,7 @@ int caseInsense::hashfunc(string key) {
     return h % array_size;
 }
 
-void caseInsense::insert(string word, Maps::WordInstance location){
+void caseInsense::insert(string word, Wrapper::WordInstance location){
     int index = hashfunc(word);
     
 }

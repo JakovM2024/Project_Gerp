@@ -5,7 +5,7 @@
 #include <string>
 #include <functional>
 #include <utility>
-#include "hash.h"
+#include "wrapper.h"
 #include <list>
 
 class caseInsense{
@@ -15,8 +15,8 @@ class caseInsense{
     caseInsense();
     ~caseInsense();
     //insert function
-    void insert(std::string word, Maps::WordInstance location);
-    std::list<Maps::WordInstance> lookup(std::string word);
+    void insert(std::string word, Wrapper::WordInstance location);
+    std::list<Wrapper::WordInstance> lookup(std::string word);
     //maybe we just void return and print to file or cout to save space
 
     private:
@@ -24,7 +24,7 @@ class caseInsense{
     int array_size;
     float load_factor;
 
-    std::list<Maps::WordInstance> *arr; //the array that holds a list of 
+    std::list<Wrapper::WordInstance> *arr; //the array that holds a list of 
             //wordInstances at each index(everylocation that word appears)
 
     int hashfunc(std::string key);
