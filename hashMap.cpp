@@ -9,11 +9,11 @@ using namespace std;
 caseInsense::caseInsense(){
     array_size = 20;
     load_factor = 0;
-    arr = new list<Wrapper::WordInstance> [array_size];
+    arr = new vector<Wrapper::WordInstance> [array_size];
 }
 
 caseInsense::~caseInsense(){
-    delete arr;
+    delete[] arr;
 }
 
 int caseInsense::hashfunc(string key) {
@@ -22,6 +22,13 @@ int caseInsense::hashfunc(string key) {
 }
 
 void caseInsense::insert(string word, Wrapper::WordInstance location){
+    //compare load factor and expand if needed
+
     int index = hashfunc(word);
-    
+    while ((not arr[index].empty()) and 
+        (arr[index].at(0).word != location.word)){
+        index = (index + 1) % array_size;
+    }
+    arr[index].push_back(location);
 }
+

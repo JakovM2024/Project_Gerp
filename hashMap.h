@@ -6,7 +6,7 @@
 #include <functional>
 #include <utility>
 #include "wrapper.h"
-#include <list>
+#include <vector>
 
 class caseInsense{
     public:
@@ -16,7 +16,7 @@ class caseInsense{
     ~caseInsense();
     //insert function
     void insert(std::string word, Wrapper::WordInstance location);
-    std::list<Wrapper::WordInstance> lookup(std::string word);
+    std::vector<Wrapper::WordInstance> lookup(std::string word);
     //maybe we just void return and print to file or cout to save space
 
     private:
@@ -24,7 +24,7 @@ class caseInsense{
     int array_size;
     float load_factor;
 
-    std::list<Wrapper::WordInstance> *arr; //the array that holds a list of 
+    std::vector<Wrapper::WordInstance> *arr; //the array that holds a list of 
             //wordInstances at each index(everylocation that word appears)
 
     int hashfunc(std::string key);
