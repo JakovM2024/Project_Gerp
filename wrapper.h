@@ -9,16 +9,18 @@
 class Wrapper{
     public:
 
-    
+    Wrapper(std::string dir);
+    ~Wrapper();
 
-    void indexFilePaths(DirectoryProcessor &processor, 
-                        std::vector<std::string> filepaths);
-
+    void indexFilePaths();
+    void readAndIndexLines();
     // method for reading files and adding words to hash
     //query loop method
 
     private:
 
+
+    std::string directory;
     hashMap sensitive;
     hashMap insensitive;
     DirectoryProcessor processor;
@@ -27,7 +29,8 @@ class Wrapper{
     std::vector<std::string> filepaths;
     std::vector<std::vector<std::string>> lines;
 
-    //processing a word based on query, inSense or sense    //reference to caseInsense and caseSense maps
+    //processing a word based on query, inSense or sense    
+    //reference to caseInsense and caseSense maps
     
 
 };
