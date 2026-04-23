@@ -18,14 +18,20 @@ void Wrapper::indexFilePaths(){
 void Wrapper::readAndIndexLines(){
     for (int i = 0; i < filepaths.size(); i++){
         ifstream infile(filepaths.at(i));
-        lines.push_back(vector<string>());
+        if(not infile.is_open()) return;
+
         //logic for reading lines into the file
         string line = "";
         int j = 0;
+
+        //line 28 would throw range error if there was no vector
+        lines.push_back(vector<string>());
         while(getline(infile, line)){
             lines.at(i).push_back(line);
             stringstream ss(line);
             std::string word;
+
+            //chooses which map to insert to
             while (ss >> word) {
                 word = processor.stripNonAlphaNum(word);
                 if (word.empty()) continue;
@@ -41,13 +47,16 @@ void Wrapper::readAndIndexLines(){
 }
 
 void Wrapper::search(bool case_sense, string query, std::ofstream &outfile){
-    //need to fix if query is multiple words
     vector<hashMap::WordInstance> results;
+
+    //need this for handling multiple words in one query
     stringstream ss(query);
     std::string word;
+
     while (ss >> word) {
         word = processor.stripNonAlphaNum(word);
         if (word.empty()) continue;
+        //choose which map to use and push
         if (case_sense){
             results = sensitive.lookup(word);
         } else {
@@ -56,6 +65,7 @@ void Wrapper::search(bool case_sense, string query, std::ofstream &outfile){
             }
             results = insensitive.lookup(word);
         }
+        //print the info using the index vectors
         for (int i = 0; i < results.size(); i++){
             string filepath = filepaths.at(results.at(i).file);
             string line = lines.at(results.at(i).file).at(results.at(i).stringLine);
