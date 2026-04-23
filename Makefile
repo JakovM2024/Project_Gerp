@@ -44,4 +44,3 @@ clean:
 		-name '*.o' ! -name 'FSTree.o' ! -name 'DirNode.o' \
 		\) -exec rm -f {} \;
 	@rm -f *~ a.out
-

@@ -7,22 +7,26 @@
 #include <utility>
 #include "wrapper.h"
 #include <vector>
+#include <list> 
 
-class caseInsense{
+class hashMap{
     public:
 
     //using linear probing not chaining
-    caseInsense();
-    ~caseInsense();
+    hashMap();
+    ~hashMap();
     //insert function
-    void insert(std::string word, Wrapper::WordInstance location);
-    std::vector<Wrapper::WordInstance> lookup(std::string word);
+    void insert(std::string &word, Wrapper::WordInstance location);
+    std::vector<Wrapper::WordInstance> lookup(std::string &word);
+    void resize(); 
+
     //maybe we just void return and print to file or cout to save space
 
     private:
 
     int array_size;
-    float load_factor;
+    int num_entries; 
+    const float max_load_factor = 0.7;
 
     std::vector<Wrapper::WordInstance> *arr; //the array that holds a list of 
             //wordInstances at each index(everylocation that word appears)

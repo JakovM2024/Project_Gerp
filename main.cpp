@@ -1,12 +1,17 @@
-#include <string>
-#include "processing.h"
-#include "FSTree.h"
-#include "DirNode.h"
-#include <iostream>
-using namespace std;
+  #include <iostream>                     
+  #include "processing.h"                     
+  using namespace std;                                                                                               
+  
+  int main() {                                                                                                       
 
-int main(){
-    DirectoryProcessor pros;
-    pros.traverseDirectory("tester");
-    return 0;
-}
+                                                                                                                     
+      cout << "Test 1: \"!!!com-p!!!!\" -> \"" << stripNonAlphaNum("!!!com-p!!!!") << "\"" << endl;
+      cout << "Test 2: \"...world...\" -> \"" << stripNonAlphaNum("...world...") << "\"" << endl;
+      cout << "Test 3: \"hello\" -> \"" << stripNonAlphaNum("hello") << "\"" << endl;
+      cout << "Test 4: \"!!!\" -> \"" << stripNonAlphaNum("!!!") << "\"" << endl;                                 
+      cout << "Test 5: \"\" -> \"" << stripNonAlphaNum("") << "\"" << endl;
+      cout << "Test 6: \"##hi there!!\" -> \"" << stripNonAlphaNum("##hi there!!") << "\"" << endl;               
+      cout << "Test 7: \"a\" -> \"" << stripNonAlphaNum("a") << "\"" << endl;                                     
+                                                                                                                     
+      return 0;                                                                                                      
+  }                                                                                                                  
