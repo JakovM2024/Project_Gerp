@@ -5,7 +5,6 @@
 #include <string>
 #include <functional>
 #include <utility>
-#include "wrapper.h"
 #include <vector>
 #include <list> 
 
@@ -16,8 +15,15 @@ class hashMap{
     hashMap();
     ~hashMap();
     //insert function
-    void insert(std::string &word, Wrapper::WordInstance location);
-    std::vector<Wrapper::WordInstance> lookup(std::string &word);
+    struct WordInstance{
+        std::string word = ""; // need to store the actual word so we can tell 
+                            //wether to probe or append to list 
+        int file = -1; //outIndex for files vector
+        int stringLine = -1; //innerIndex for string line 2d vector
+    };
+    
+    void insert(std::string &word, hashMap::WordInstance location);
+    std::vector<hashMap::WordInstance> lookup(std::string &word);
     void resize(); 
 
     //maybe we just void return and print to file or cout to save space
@@ -28,10 +34,11 @@ class hashMap{
     int num_entries; 
     const float max_load_factor = 0.7;
 
-    std::vector<Wrapper::WordInstance> *arr; //the array that holds a list of 
+    std::vector<WordInstance> *arr; //the array that holds a list of 
             //wordInstances at each index(everylocation that word appears)
 
     int hashfunc(std::string key);
+
 
     //collison handler
     //calculate load factor

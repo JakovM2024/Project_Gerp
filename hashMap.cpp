@@ -9,7 +9,7 @@ using namespace std;
 hashMap::hashMap(){
     array_size = 20;
     num_entries = 0; 
-    arr = new vector<Wrapper::WordInstance> [array_size];
+    arr = new vector<hashMap::WordInstance> [array_size];
 }
 
 hashMap::~hashMap(){
@@ -21,7 +21,7 @@ int hashMap::hashfunc(string key) {
     return h % array_size;
 }
 
-void hashMap::insert(string &word, Wrapper::WordInstance location){
+void hashMap::insert(string &word, hashMap::WordInstance location){
     //compare load factor and expand if needed
 
     int index = hashfunc(word);
@@ -48,7 +48,7 @@ void hashMap::insert(string &word, Wrapper::WordInstance location){
     
 }
 
-vector<Wrapper::WordInstance> hashMap::lookup(std::string &word) {
+vector<hashMap::WordInstance> hashMap::lookup(std::string &word) {
     int bucket = hashfunc(word);
     // linear probing until we find an empty bucket or a matching word
     while (!arr[bucket].empty() &&
@@ -58,7 +58,7 @@ vector<Wrapper::WordInstance> hashMap::lookup(std::string &word) {
 
     if (arr[bucket].empty()) {
         // word was never inserted so we can just return an empty vector 
-        return vector<Wrapper::WordInstance>{};
+        return vector<hashMap::WordInstance>{};
     }
 
     // found, return the bucket vector
@@ -67,12 +67,12 @@ vector<Wrapper::WordInstance> hashMap::lookup(std::string &word) {
 
 void hashMap::resize() {
     //store the original array
-    vector<Wrapper::WordInstance> *old_array = arr; 
+    vector<hashMap::WordInstance> *old_array = arr; 
     int old_size = array_size; 
     
     //update the size
     array_size *= 2; 
-    arr = new vector<Wrapper::WordInstance> [array_size]; //doubled sized array
+    arr = new vector<hashMap::WordInstance> [array_size]; //doubled sized array
     num_entries = 0; 
     
     //insert the words into the doubled array 

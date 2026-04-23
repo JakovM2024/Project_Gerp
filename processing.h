@@ -12,11 +12,13 @@ class DirectoryProcessor{
 
     public:
         string stripNonAlphaNum(string input);
-        void traverseDirectory(string directory);
+        void traverseDirectory(string directory, 
+                               std::vector<std::string> &filepaths);
 
     private:
 
-        void traverseHelper(string path, DirNode *currFile);
+        void traverseHelper(string path, DirNode *currFile,
+                            std::vector<std::string> &filepaths);
 };
 
 #endif 

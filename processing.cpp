@@ -6,15 +6,17 @@
 
 using namespace std;
 
-void DirectoryProcessor::traverseDirectory(string directory){
+void DirectoryProcessor::traverseDirectory(string directory, 
+                                        std::vector<std::string> &filepaths){
     FSTree files(directory);
     DirNode *rootfile = files.getRoot();
 
     string startPath = "";
-    traverseHelper(startPath, rootfile);
+    traverseHelper(startPath, rootfile, filepaths);
 }
 
-void DirectoryProcessor::traverseHelper(string path, DirNode *currFile){
+void DirectoryProcessor::traverseHelper(string path, DirNode *currFile,
+                                        std::vector<std::string> &filepaths){
     if (currFile->isEmpty()){
         return;
     }
@@ -22,13 +24,13 @@ void DirectoryProcessor::traverseHelper(string path, DirNode *currFile){
     if (currFile->hasFiles()){
         int numFiles = currFile->numFiles();
         for (int i = 0; i < numFiles; i++){
-            cout << path + currFile->getFile(i) << endl;
+            filepaths.push_back(path + currFile->getFile(i));
         }
     }
     if (currFile->hasSubDir()){
         int numSubDirs = currFile->numSubDirs();
         for (int i = 0; i < numSubDirs; i++){
-            traverseHelper(path, currFile->getSubDir(i));
+            traverseHelper(path, currFile->getSubDir(i), filepaths);
         }
         return;
     }
