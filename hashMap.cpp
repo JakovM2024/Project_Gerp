@@ -89,4 +89,3 @@ void hashMap::resize() {
 
     delete [] old_array;
 }
-

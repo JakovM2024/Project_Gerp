@@ -8,7 +8,11 @@ using namespace std;
 
 Wrapper::Wrapper(string dir){
     directory = dir;
+    indexFilePaths();
+    readAndIndexLines();    
 }
+
+Wrapper::~Wrapper() {}
 
 void Wrapper::indexFilePaths(){
 
@@ -18,7 +22,7 @@ void Wrapper::indexFilePaths(){
 void Wrapper::readAndIndexLines(){
     for (int i = 0; i < filepaths.size(); i++){
         ifstream infile(filepaths.at(i));
-        if(not infile.is_open()) return;
+        if(not infile.is_open()) continue;
 
         //logic for reading lines into the file
         string line = "";
@@ -74,7 +78,12 @@ void Wrapper::search(bool case_sense, string query, std::ofstream &outfile){
         }
 
         if (results.empty()) {
-            outfile << word << " Not Found" << endl;
+            if (case_sense) {                                                                                                        
+                outfile << word << " Not Found. Try with @insensitive or @i." 
+                        << endl;                                               
+            } else {                                                                  
+                outfile << word << " Not Found." << endl;                                                                            
+            }
         }
     }
 }

@@ -1,21 +1,56 @@
-#include <iostream>                     
-#include "processing.h"  
-#include <vector>                   
-using namespace std;                                                                                               
+#include <iostream>
+#include "processing.h"
+#include "wrapper.h"
+using namespace std;
 
-int main() {                                                                                                       
+int main(int argc, char *argv[])
+{
+	if (argc != 3) {
+		cout << "Usage: ./gerp inputDirectory outputFile";
+		exit(EXIT_FAILURE);
+	}
 
-    DirectoryProcessor processor;
-    vector<string> files;
-    processor.traverseDirectory("tester", files);
-    /*                                                                                                            
-    cout << "Test 1: \"!!!com-p!!!!\" -> \"" << stripNonAlphaNum("!!!com-p!!!!") << "\"" << endl;
-    cout << "Test 2: \"...world...\" -> \"" << stripNonAlphaNum("...world...") << "\"" << endl;
-    cout << "Test 3: \"hello\" -> \"" << stripNonAlphaNum("hello") << "\"" << endl;
-    cout << "Test 4: \"!!!\" -> \"" << stripNonAlphaNum("!!!") << "\"" << endl;                                 
-    cout << "Test 5: \"\" -> \"" << stripNonAlphaNum("") << "\"" << endl;
-    cout << "Test 6: \"##hi there!!\" -> \"" << stripNonAlphaNum("##hi there!!") << "\"" << endl;               
-    cout << "Test 7: \"a\" -> \"" << stripNonAlphaNum("a") << "\"" << endl;                                     
-    */                                                                                                                     
-    return 0;                                                                                                      
-}                                                                                                                  
+	Wrapper index(argv[1]);
+	ofstream outfile(argv[2]); 
+	if (!outfile.is_open()) {
+		cerr << "Could not open output file: " << argv[2] << endl;
+		return EXIT_FAILURE; 
+	}
+	
+	string word; 
+	while (true) {
+		cout << "Query? "; 
+		if (!(cin >> word)) {
+				cout << "Goodbye! Thank you and have a nice day." << endl; 
+				break;
+		}
+
+		if (word == "@q" || word == "@quit") {
+			cout << "Goodbye! Thank you and have a nice day." << endl; 
+			break;
+		}
+
+		else if (word == "@f") {
+			string new_file; 
+			cin >> new_file; 
+			outfile.close(); 
+			outfile.open(new_file); 
+			if (!outfile.is_open()) {
+				cerr << "Could not open " << new_file 
+					 << " for writing." << endl; 
+			}
+		}
+
+		else if (word == "@i" || word == "@insensitive") {
+			string query; 
+			cin >> query; 
+			index.search(false, query, outfile); 
+		} 
+        
+		else {
+			index.search(true, word, outfile); 
+		}
+	}
+
+	return 0; 
+}
