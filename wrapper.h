@@ -5,6 +5,7 @@
 #include "hashMap.h"
 #include <vector>
 #include "processing.h"
+#include <fstream>
 
 class Wrapper{
     public:
@@ -12,8 +13,8 @@ class Wrapper{
     Wrapper(std::string dir);
     ~Wrapper();
 
-    void indexFilePaths();
-    void readAndIndexLines();
+    void search(bool case_sense, std::string query, std::ofstream &outfile);
+
     // method for reading files and adding words to hash
     //query loop method
 
@@ -24,6 +25,8 @@ class Wrapper{
     hashMap sensitive;
     hashMap insensitive;
     DirectoryProcessor processor;
+    void indexFilePaths();
+    void readAndIndexLines();
 
 
     std::vector<std::string> filepaths;

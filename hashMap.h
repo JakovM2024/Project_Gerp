@@ -21,8 +21,8 @@ class hashMap{
         int file = -1; //outIndex for files vector
         int stringLine = -1; //innerIndex for string line 2d vector
     };
-    
-    void insert(std::string &word, hashMap::WordInstance location);
+
+    void insert(std::string &word, int file, int stringLine);
     std::vector<hashMap::WordInstance> lookup(std::string &word);
     void resize(); 
 

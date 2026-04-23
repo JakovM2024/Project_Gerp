@@ -21,10 +21,14 @@ int hashMap::hashfunc(string key) {
     return h % array_size;
 }
 
-void hashMap::insert(string &word, hashMap::WordInstance location){
+void hashMap::insert(std::string &word, int file, int stringLine){
     //compare load factor and expand if needed
 
     int index = hashfunc(word);
+    WordInstance location;
+    location.word = word;
+    location.file = file;
+    location.stringLine = stringLine;
     while ((not arr[index].empty()) and 
         (arr[index].at(0).word != location.word)){
         index = (index + 1) % array_size;
@@ -78,7 +82,8 @@ void hashMap::resize() {
     //insert the words into the doubled array 
     for (int i = 0; i < old_size; i++) {
         for (int j = 0; j < old_array[i].size(); j++) {
-            insert(old_array[i][j].word, old_array[i][j]);
+            insert(old_array[i][j].word, old_array[i][j].file, 
+                    old_array[i][j].stringLine);
         }
     }
 
