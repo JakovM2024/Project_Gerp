@@ -36,7 +36,7 @@ void hashMap::insert(std::string &word, int file, int stringLine){
 
     //make sure that the same word in the same line and file isn't already 
     //inserted 
-    if (!arr[index].empty() and
+    if ((not arr[index].empty()) and
       arr[index].back().file == location.file and
       arr[index].back().stringLine == location.stringLine) {
       return;
