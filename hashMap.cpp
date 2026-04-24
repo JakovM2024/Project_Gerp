@@ -81,7 +81,7 @@ void hashMap::resize() {
     
     //insert the words into the doubled array 
     for (int i = 0; i < old_size; i++) {
-        for (int j = 0; j < old_array[i].size(); j++) {
+        for (size_t j = 0; j < old_array[i].size(); j++) {
             insert(old_array[i][j].word, old_array[i][j].file, 
                     old_array[i][j].stringLine);
         }

@@ -43,7 +43,7 @@ string DirectoryProcessor::stripNonAlphaNum(string input) {
     int endPos = -1;
 
     //!!!Hello!!!!
-    for (int i = 0; i < input.length(); i++) { 
+    for (size_t i = 0; i < input.length(); i++) { 
         if (isalnum(input[i]) != 0) {
             startPos = i; 
             break; 

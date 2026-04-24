@@ -20,7 +20,7 @@ void Wrapper::indexFilePaths(){
 }
 
 void Wrapper::readAndIndexLines(){
-    for (int i = 0; i < filepaths.size(); i++){
+    for (size_t i = 0; i < filepaths.size(); i++){
         ifstream infile(filepaths.at(i));
         if(not infile.is_open()) continue;
 
@@ -40,7 +40,7 @@ void Wrapper::readAndIndexLines(){
                 word = processor.stripNonAlphaNum(word);
                 if (word.empty()) continue;
                 sensitive.insert(word, i, j);
-                for (int k = 0; k < word.size(); k++){
+                for (size_t k = 0; k < word.size(); k++){
                     word[k] = tolower((unsigned char)word[k]);
                 }
                 insensitive.insert(word, i, j);
@@ -64,13 +64,13 @@ void Wrapper::search(bool case_sense, string query, std::ofstream &outfile){
             if (case_sense){
                 results = sensitive.lookup(word);
             } else {
-                for (int k = 0; k < word.size(); k++){
+                for (size_t k = 0; k < word.size(); k++){
                     word[k] = tolower((unsigned char)word[k]);
                 }
                 results = insensitive.lookup(word);
             }
             //print the info using the index vectors
-            for (int i = 0; i < results.size(); i++){
+            for (size_t i = 0; i < results.size(); i++){
                 string filepath = filepaths.at(results.at(i).file);
                 string line = lines.at(results.at(i).file)
                                    .at(results.at(i).stringLine);
@@ -80,7 +80,7 @@ void Wrapper::search(bool case_sense, string query, std::ofstream &outfile){
             }
         }
 
-        if (results.empty()) {
+        if (results.empty() or word.empty()) {
             if (case_sense) {
                 outfile << word << " Not Found. Try with @insensitive or @i." 
                         << endl;
