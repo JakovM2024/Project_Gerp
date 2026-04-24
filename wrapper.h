@@ -26,9 +26,6 @@ class Wrapper{
 
     void search(bool case_sense, std::string query, std::ofstream &outfile);
 
-    // method for reading files and adding words to hash
-    //query loop method
-
     private:
 
 
@@ -42,10 +39,6 @@ class Wrapper{
 
     std::vector<std::string> filepaths;
     std::vector<std::vector<std::string>> lines;
-
-    //processing a word based on query, inSense or sense    
-    //reference to caseInsense and caseSense maps
-    
 
 };
 

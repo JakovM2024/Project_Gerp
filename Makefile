@@ -1,7 +1,7 @@
 ###
 ### Makefile for Gerp Project
 ###
-### Author:  YOUR NAME HERE
+### Author:  Jakov Marohnic and Marcus Ho
 
 CXX      = clang++
 CXXFLAGS = -g3 -Wall -Wextra
@@ -25,8 +25,9 @@ hashMap.o: hashMap.cpp hashMap.h
 wrapper.o: wrapper.cpp wrapper.h hashMap.h processing.h
 	$(CXX) $(CXXFLAGS) -c wrapper.cpp -o wrapper.o
 
-unit_test: unit_test_driver.o processing.o
-	$(CXX) $(CXXFLAGS) unit_test_driver.o processing.o DirNode.o FSTree.o
+unit_test: unit_test_driver.o processing.o hashMap.o
+	$(CXX) $(CXXFLAGS) unit_test_driver.o processing.o DirNode.o \
+		FSTree.o hashMap.o
 
 ##
 ## Here is a special rule that removes all .o files besides the provided ones

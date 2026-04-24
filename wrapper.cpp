@@ -136,7 +136,6 @@ void Wrapper::search(bool case_sense, string query, std::ofstream &outfile){
                     << endl;
             }
         }
-
         if (results.empty() or word.empty()) {
             if (case_sense) {
                 outfile << stripped
