@@ -36,8 +36,8 @@ void hashMap::insert(std::string &word, int file, int stringLine){
 
     //make sure that the same word in the same line and file isn't already 
     //inserted 
-    if (!arr[index].empty() &&
-      arr[index].back().file == location.file &&
+    if (!arr[index].empty() and
+      arr[index].back().file == location.file and
       arr[index].back().stringLine == location.stringLine) {
       return;
   }
@@ -55,7 +55,7 @@ void hashMap::insert(std::string &word, int file, int stringLine){
 vector<hashMap::WordInstance> hashMap::lookup(std::string &word) {
     int bucket = hashfunc(word);
     // linear probing until we find an empty bucket or a matching word
-    while (!arr[bucket].empty() &&
+    while ((not arr[bucket].empty()) and
            arr[bucket].at(0).word != word) {
         bucket = (bucket + 1) % array_size;
     }

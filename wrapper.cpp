@@ -59,31 +59,35 @@ void Wrapper::search(bool case_sense, string query, std::ofstream &outfile){
 
     while (ss >> word) {
         word = processor.stripNonAlphaNum(word);
-        if (word.empty()) continue;
         //choose which map to use and push
-        if (case_sense){
-            results = sensitive.lookup(word);
-        } else {
-            for (int k = 0; k < word.size(); k++){
-                word[k] = tolower((unsigned char)word[k]);
+        if (not word.empty()){
+            if (case_sense){
+                results = sensitive.lookup(word);
+            } else {
+                for (int k = 0; k < word.size(); k++){
+                    word[k] = tolower((unsigned char)word[k]);
+                }
+                results = insensitive.lookup(word);
             }
-            results = insensitive.lookup(word);
-        }
-        //print the info using the index vectors
-        for (int i = 0; i < results.size(); i++){
-            string filepath = filepaths.at(results.at(i).file);
-            string line = lines.at(results.at(i).file).at(results.at(i).stringLine);
-            outfile << filepath + ":" + to_string(results.at(i).stringLine + 1) +
-                ":" + line << endl;
+            //print the info using the index vectors
+            for (int i = 0; i < results.size(); i++){
+                string filepath = filepaths.at(results.at(i).file);
+                string line = lines.at(results.at(i).file)
+                                   .at(results.at(i).stringLine);
+                outfile << filepath + ":" + 
+                    to_string(results.at(i).stringLine + 1) + ": " + line 
+                    << endl;
+            }
         }
 
         if (results.empty()) {
-            if (case_sense) {                                                                                                        
+            if (case_sense) {
                 outfile << word << " Not Found. Try with @insensitive or @i." 
-                        << endl;                                               
-            } else {                                                                  
-                outfile << word << " Not Found." << endl;                                                                            
+                        << endl;
+            } else {
+                outfile << word << " Not Found." << endl;
             }
         }
+
     }
 }

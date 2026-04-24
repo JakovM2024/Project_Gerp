@@ -57,7 +57,7 @@ string DirectoryProcessor::stripNonAlphaNum(string input) {
         }
     }
 
-    if (startPos == -1 && endPos == -1) {
+    if (startPos == -1 and endPos == -1) {
         return ""; 
     }
 
