@@ -1,4 +1,15 @@
-//this file is the wrapper for the case insensitive and case sensetive maps
+/*
+ *   wrapper.h
+ *   Marcus Ho and Jakov Maronhic
+ *   2026-04-24
+ *   CS 15 Project 4: gerp
+ *
+ *   Interface for the Wrapper class, which owns both the case-sensitive
+ *   and case-insensitive hash maps along with the filepaths and lines
+ *   data. Declares the constructor that builds the index from a
+ *   directory and the public search method used by the query loop.
+ */
+
 #ifndef HASH_H
 #define HASH_H
 #include <string>

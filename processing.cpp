@@ -1,3 +1,14 @@
+/*
+ *   processing.cpp
+ *   Marcus Ho and Jakov Maronhic
+ *   2026-04-24
+ *   CS 15 Project 4: gerp
+ *
+ *   Implements the DirectoryProcessor class, which walks an FSTree to
+ *   collect every file path under a given directory and strips leading
+ *   and trailing non-alphanumeric characters from a token.
+ */
+
 #include <string>
 #include "processing.h"
 #include "FSTree.h"
@@ -6,7 +17,16 @@
 
 using namespace std;
 
-void DirectoryProcessor::traverseDirectory(string directory, 
+/*
+ * name: traverseDirectory()
+ * purpose: Walks the directory tree rooted at the given directory and
+ *          collects the full path of every file inside it
+ * arguments: the root directory name and a reference to the filepaths
+ *            vector to fill
+ * returns: none
+ * effects: Pushes every file path into filepaths
+ */
+void DirectoryProcessor::traverseDirectory(string directory,
                                         std::vector<std::string> &filepaths){
     FSTree files(directory);
     DirNode *rootfile = files.getRoot();
@@ -15,6 +35,15 @@ void DirectoryProcessor::traverseDirectory(string directory,
     traverseHelper(startPath, rootfile, filepaths);
 }
 
+/*
+ * name: traverseHelper()
+ * purpose: Recursive helper that visits the current DirNode, records any
+ *          files it contains, and then recurses into each subdirectory
+ * arguments: the path accumulated so far, a pointer to the current
+ *            DirNode, and a reference to the filepaths vector to fill
+ * returns: none
+ * effects: Appends each discovered file's full path into filepaths
+ */
 void DirectoryProcessor::traverseHelper(string path, DirNode *currFile,
                                         std::vector<std::string> &filepaths){
     if (currFile->isEmpty()){
@@ -37,6 +66,16 @@ void DirectoryProcessor::traverseHelper(string path, DirNode *currFile,
     }
 }
 
+/*
+ * name: stripNonAlphaNum()
+ * purpose: Removes leading and trailing non-alphanumeric characters from
+ *          a token, keeping everything between the first and last
+ *          alphanumeric characters
+ * arguments: the input string
+ * returns: the stripped string (empty if no alphanumeric characters
+ *          were present)
+ * effects: none
+ */
 string DirectoryProcessor::stripNonAlphaNum(string input) {
     string strippedString; 
     int startPos = -1; 
