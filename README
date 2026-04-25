@@ -74,9 +74,33 @@ insensitive search
 file for future query outputs to be written to
 
 
-F An “architectural overview,” i.e., a description of how your various 
-program modules relate.
-For example, the FSTree implementation keeps a pointer to the root DirNode.
+F An “architectural overview,” i.e., a description of how your various program 
+modules relate.For example, the FSTree implementation keeps a pointer to the 
+root DirNode.
+
+Our program is made up of three main parts that work together when the program 
+is ran and during querying. We have a class called directoryProcessor that helps
+traverse the file-system, a class called wrapper that indexes the file system, 
+and a hashMap class. 
+When the program starts, main passes the root directory to the Wrapper class. 
+The Wrapper class uses the FSTree to walk the directory and intialize all the 
+files into a vector that holds the file paths. The Wrapper class also reads the
+contents of each file line by line and stores it into a 2d vector. That way 
+each file and each line can be later retrieved by just an integer index. 
+
+While the Wrapper class is reading the files, it strips non-alpanumeric 
+characters from the edges of each word and inserts each word into two hash 
+maps that are pivate members of the Wrapper class. One hashMap is 
+case-sensitive, and one is case-insensitive.
+The hashMaps are made of a struct that is owned by the hashMap class called 
+WordInstance. This struct holds the name of the word, an integer to the file 
+from the vector of filepaths, and also the integer to the exact line in the 
+2d vector of lines. 
+
+Once the indexing is done, main runs the query loop. It reads queries from 
+the user and calls the search function that is owned by the Wrapper class. 
+The search function returns the results of the search. 
+
 
 
 G An outline of the data structures and algorithms that you used. Given 
@@ -85,6 +109,45 @@ data structures that you used and justify why you used them. For this
 assignment it is imperative that you explain your data structures
 and algorithms in detail, as it will help us understand your code since 
 there is no single right way of completing this assignment.
+
+We used vectors of strings to store the filepaths and also a 2d vector to 
+store the lines of the files. Vectors was also used for our hashmap where we
+made an array of type vector<wordInstance>. We chose to use vectors so that 
+there is o(1) access to the different buckets so we can quickly retrieve the 
+occurances of each word that the user is searching for in their query. With 
+vectors we can easily just push_back() every new occurance of the words when 
+creating the index. 
+
+Another data structure we used was the hashmap. This was essential to actually 
+be able to quickly lookup the word that the user is searching for. With the 
+hashmap, each bucket is mapped to a key. The key is every word that is in the 
+files. So when the user needs to lookup a word, we just hash the word and find 
+the bucket and then print all the occurances of the in that bucket. Hashmaps 
+allow us to have instant acccess to the bucket we need. We do not have to spend 
+time searching through data to find the occurances of a word. One downside to 
+hashmaps is collisions, where two different words are mapped to the same bucket 
+by the hash function. In order to handle this, we used linear probing where if 
+the bucket that the word was hashed to already holds a different word, then we 
+look at the following buckets until we find an empty one. We had one hashmap 
+that was case sensitive, which had keys that were every version of that word. 
+The case insensitive hashmap just had the lowercase version of the words. 
+
+Algorithms are essential to this program. The first thing the program does is 
+build the index, and the algorithm for that is basically a recursive walk. I 
+start at the root directory, and for every entry inside it I either recurse 
+deeper if it's another directory, or open it and read it if it's a file. As 
+I'm walking, I keep track of the path I've taken so far so that when I hit a 
+file, I already know its full path and can store it. For each file I open, 
+I read it line by line. I stash the whole raw line in my line storage so I 
+can print it back later. Another essential algorithm is our resize function. 
+Resizing is what keeps lookups fast as
+the map fills up. I make a new bucket array that's double the size, reset my 
+entry count to zero, and then I walk through
+every entry in every bucket of the old array and re-insert it into the new one. 
+The bucket each entry lands in changes because the modulus changed, so I have to
+recompute all of them. Once everything's been moved over, the old array gets
+thrown away and the map is back to having short chains.
+
 
 
 H Details and an explanation of how you tested the various parts of your
@@ -109,4 +172,3 @@ I. Please let us know approximately how many hours you spent working on
 this project. This should include both weeks one and two.
 
 10
-
