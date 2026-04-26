@@ -1,0 +1,17 @@
+the                                                                                                                 
+The                                                                                                                 
+THE                                                                                                                 
+champions                                                                                                           
+nonexistentword                                                                                                     
+@i the                                                                                                              
+@insensitive Champions                                                                                              
+hello,                                                    
+"quoted"                                                                                                            
+end-of-line.                                                                                                        
+@f alt_output.txt
+cat                                                                                                                 
+@i Cat                                                                                                              
+@f back_to_main.txt
+dog         
+!!!!!                                                                 
+@quit

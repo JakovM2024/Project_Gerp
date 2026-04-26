@@ -85,15 +85,12 @@ void hashMap::insert(std::string &word, int file, int stringLine){
       arr[index].back().stringLine == location.stringLine) {
       return;
   }
-
     arr[index].push_back(location);
     num_entries++; 
     //check if we need to resize after we inserted 
     if ((float)num_entries / array_size > max_load_factor) {
         resize(); 
     }   
-
-    
 }
 
 /*

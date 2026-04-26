@@ -1,18 +1,17 @@
 ###
 ### Makefile for Gerp Project
 ###
-### Author:  Jakov Marohnic and Marcus Ho
+### Author: Jakov Marohnic and Marcus Ho 
 
 CXX      = clang++
 CXXFLAGS = -g3 -Wall -Wextra
 LDFLAGS  = -g3
 
-## Main executable
+
 gerp: main.o processing.o hashMap.o wrapper.o
 	$(CXX) $(LDFLAGS) -o gerp main.o processing.o hashMap.o wrapper.o \
 		FSTree.o DirNode.o
 
-## Per-file compile rules
 main.o: main.cpp wrapper.h processing.h
 	$(CXX) $(CXXFLAGS) -c main.cpp -o main.o
 
@@ -28,6 +27,7 @@ wrapper.o: wrapper.cpp wrapper.h hashMap.h processing.h
 unit_test: unit_test_driver.o processing.o hashMap.o
 	$(CXX) $(CXXFLAGS) unit_test_driver.o processing.o DirNode.o \
 		FSTree.o hashMap.o
+
 
 ##
 ## Here is a special rule that removes all .o files besides the provided ones

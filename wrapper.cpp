@@ -108,11 +108,8 @@ void Wrapper::readAndIndexLines(){
  */
 void Wrapper::search(bool case_sense, string query, std::ofstream &outfile){
     vector<hashMap::WordInstance> results;
-
-    //need this for handling multiple words in one query
     stringstream ss(query);
     std::string word;
-
     while (ss >> word) {
         word = processor.stripNonAlphaNum(word);
         string stripped = word;
@@ -136,6 +133,7 @@ void Wrapper::search(bool case_sense, string query, std::ofstream &outfile){
                     << endl;
             }
         }
+
         if (results.empty() or word.empty()) {
             if (case_sense) {
                 outfile << stripped

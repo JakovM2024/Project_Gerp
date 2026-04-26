@@ -1,4 +1,4 @@
-/*
+/* 
  * unit_tests.h
  * Jakov Marohnic and Marcus Ho
  * 04/24/2026
@@ -162,4 +162,133 @@ void hashMapLookupMissing(){
     map.insert(w, 0, 0);
     vector<hashMap::WordInstance> result = map.lookup(w2);
     assert(result.empty());
+}
+
+
+// Additional DirectoryProcessor tests 
+
+//leading and trailing whitespace should be stripped (space is not alnum)
+void stripWhitespace(){
+    DirectoryProcessor processor;
+    assert(processor.stripNonAlphaNum("  hello  ") == "hello");
+    assert(processor.stripNonAlphaNum("\thello\t") == "hello");
+}
+
+//single non-alphanumeric character should return empty
+void stripSingleNonAlnum(){
+    DirectoryProcessor processor;
+    assert(processor.stripNonAlphaNum("!") == "");
+    assert(processor.stripNonAlphaNum(".") == "");
+}
+
+//mixed case should be preserved exactly
+void stripPreservesCase(){
+    DirectoryProcessor processor;
+    assert(processor.stripNonAlphaNum("HeLLo") == "HeLLo");
+    assert(processor.stripNonAlphaNum("!!CamelCase!!") == "CamelCase");
+}
+
+
+//--- Additional hashMap tests ---
+
+//map should be case sensitive: "Hello" and "hello" are different keys
+void hashMapCaseSensitive(){
+    hashMap map;
+    string upper = "Hello";
+    string lower = "hello";
+    map.insert(upper, 0, 0);
+    map.insert(lower, 0, 1);
+    vector<hashMap::WordInstance> upResult = map.lookup(upper);
+    vector<hashMap::WordInstance> lowResult = map.lookup(lower);
+    assert(upResult.size() == 1);
+    assert(lowResult.size() == 1);
+    assert(upResult[0].word == "Hello");
+    assert(lowResult[0].word == "hello");
+}
+
+//same word, same file, different line should be stored as separate entries
+void hashMapSameFileDiffLine(){
+    hashMap map;
+    string w = "hello";
+    map.insert(w, 0, 1);
+    map.insert(w, 0, 2);
+    map.insert(w, 0, 3);
+    vector<hashMap::WordInstance> result = map.lookup(w);
+    assert(result.size() == 3);
+}
+
+//same word, different file, same line should be stored as separate entries
+void hashMapDiffFileSameLine(){
+    hashMap map;
+    string w = "hello";
+    map.insert(w, 0, 5);
+    map.insert(w, 1, 5);
+    map.insert(w, 2, 5);
+    vector<hashMap::WordInstance> result = map.lookup(w);
+    assert(result.size() == 3);
+}
+
+//two different words that may collide in the same bucket should both
+//be independently retrievable
+void hashMapHashCollision(){
+    hashMap map;
+    //insert many distinct keys so most buckets have multiple residents
+    string keys[] = {"alpha","beta","gamma","delta","epsilon","zeta",
+                     "eta","theta","iota","kappa","lambda","mu",
+                     "nu","xi","omicron","pi","rho","sigma","tau",
+                     "upsilon","phi","chi","psi","omega"};
+    int n = sizeof(keys) / sizeof(keys[0]);
+    for (int i = 0; i < n; i++){
+        map.insert(keys[i], i, i);
+    }
+    //every key still uniquely retrievable
+    for (int i = 0; i < n; i++){
+        vector<hashMap::WordInstance> result = map.lookup(keys[i]);
+        assert(result.size() == 1);
+        assert(result[0].word == keys[i]);
+        assert(result[0].file == i);
+        assert(result[0].stringLine == i);
+    }
+}
+
+//insert many words to trigger multiple resizes
+void hashMapStressResize(){
+    hashMap map;
+    const int N = 500;
+    vector<string> words;
+    for (int i = 0; i < N; i++){
+        words.push_back("word" + to_string(i));
+    }
+    for (int i = 0; i < N; i++){
+        map.insert(words[i], i % 10, i);
+    }
+    //all entries still findable after multiple resizes
+    for (int i = 0; i < N; i++){
+        vector<hashMap::WordInstance> result = map.lookup(words[i]);
+        assert(result.size() == 1);
+        assert(result[0].file == i % 10);
+        assert(result[0].stringLine == i);
+    }
+}
+
+//dedup must still work correctly after a resize has occurred
+void hashMapDedupAfterResize(){
+    hashMap map;
+    string w = "repeat";
+    //insert enough other entries to trigger at least one resize first
+    vector<string> filler;
+    for (int i = 0; i < 30; i++){
+        filler.push_back("filler" + to_string(i));
+    }
+    for (int i = 0; i < 30; i++){
+        map.insert(filler[i], 0, i);
+    }
+    //now hammer the same (word, file, line) and confirm only one entry
+    for (int i = 0; i < 50; i++){
+        map.insert(w, 9, 9);
+    }
+    vector<hashMap::WordInstance> result = map.lookup(w);
+    assert(result.size() == 1);
+    assert(result[0].file == 9);
+    assert(result[0].stringLine == 9);
 }

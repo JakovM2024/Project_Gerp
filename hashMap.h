@@ -1,16 +1,3 @@
-/*
- *   hashMap.h
- *   Marcus Ho and Jakov Maronhic
- *   2026-04-24
- *   CS 15 Project 4: gerp
- *
- *   Interface for the hashMap class used by gerp. Declares the
- *   WordInstance struct (word, file index, line index) and the public
- *   API for inserting occurrences, looking up all occurrences of a
- *   word, and resizing the bucket array when the load factor is
- *   exceeded.
- */
-
 #ifndef CASE_INSENSITIVE_H
 #define CASE_INSENSITIVE_H
 
